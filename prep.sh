@@ -15,15 +15,19 @@ case "$ID" in
         # --- UBUNTU SPECIFIC TASKS ---
         echo "Updating System"
         sudo apt update && sudo apt upgrade -y
+        read -n 1 -s -r -p "Press any key to continue..."
 
         echo "Installing Cockpit"
         sudo apt install cockpit cockpit-podman cockpit-files
+        read -n 1 -s -r -p "Press any key to continue..."
         echo "Applying networking fix for Cockpit"
         sudo touch /etc/NetworkManager/conf.d/10-globally-managed-devices.conf
         printf "[keyfile]\nunmanaged-devices=none\n" >> /etc/NetworkManager/conf.d/10-globally-managed-devices.conf
+        read -n 1 -s -r -p "Press any key to continue..."
 
         echo "Setting Up Podman"
         sudo apt-get -y install podman podman-compose
+        read -n 1 -s -r -p "Press any key to continue..."
         ;;
         
     fedora)
