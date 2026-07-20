@@ -23,8 +23,7 @@ case "$ID" in
         read -n 1 -s -r -p "Press any key to continue..."
         echo "Applying networking fix for Cockpit"
         sudo touch /etc/NetworkManager/conf.d/10-globally-managed-devices.conf
-        printf "[keyfile]\nunmanaged-devices=none\n" >> /etc/NetworkManager/conf.d/10-globally-managed-devices.conf
-        read -n 1 -s -r -p "Press any key to continue..."
+        printf "[keyfile]\nunmanaged-devices=none\n" | sudo tee -a /etc/NetworkManager/conf.d/10-globally-managed-devices.conf > /dev/null
 
         echo "Setting Up Podman"
         sudo apt-get -y install podman podman-compose
@@ -54,6 +53,7 @@ case "$ID" in
 esac
 
 sudo chown jelly:jelly ./
+sudo chmod -R 777 ./media/
 
 echo "System configuration complete! Starting services."
 
