@@ -18,10 +18,9 @@ case "$ID" in
         read -n 1 -s -r -p "Press any key to continue..."
 
         echo "Installing Cockpit"
-        sudo apt install cockpit
+        . /etc/os-release
+        sudo apt install -t ${VERSION_CODENAME}-backports cockpit cockpit-podman cockpit-files -y
         read -n 1 -s -r -p "Press any key to continue..."
-        echo "Installing Cockpit Addons"
-        sudo apt install cockpit-podman cockpit-files
         echo "Applying networking fix for Cockpit"
         sudo touch /etc/NetworkManager/conf.d/10-globally-managed-devices.conf
         printf "[keyfile]\nunmanaged-devices=none\n" >> /etc/NetworkManager/conf.d/10-globally-managed-devices.conf
