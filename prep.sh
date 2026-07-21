@@ -52,11 +52,17 @@ case "$ID" in
         ;;
 esac
 
+echo "Setting Folder Permissions"
 sudo chown jelly:jelly ./
 sudo chmod -R 777 ./media/
 
-echo "System configuration complete! Starting services."
+echo "Setting Up Systemd For Reboot Persistence"
+loginctl enable-linger jelly
+mkdir -p /home/jelly/.config/systemd/user
+cp ./jellybox-compose.service /home/jelly/.config/systemd/user/jellybox-compose.service
 
-podman compose up -d 
+echo "Starting Services"
+systemctl --user daemon-reload
+systemctl --user enable --now podman-compose.service
 
 echo "Done! See readme for how to get started"
